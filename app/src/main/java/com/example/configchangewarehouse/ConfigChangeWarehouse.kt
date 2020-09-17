@@ -1,5 +1,6 @@
 package com.example.configchangewarehouse
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -21,7 +22,25 @@ object ConfigChangeWarehouse {
 		return Warehouse.of(key)[innerKey] as T
 	}
 
-	fun attach(fragment: Fragment, savedInstanceState: Bundle?): Int {
+	fun attach(activity: Activity, savedInstanceState: Bundle?) {
+		attachInner(activity, savedInstanceState)
+	}
+
+	fun attach(fragment: Fragment, savedInstanceState: Bundle?) {
+		attachInner(fragment, savedInstanceState)
+	}
+
+	fun onSaveInstanceState(outState: Bundle, key: Int) {
+		outState.putInt(BUNDLE_KEY, key)
+	}
+
+	fun checkCleanUp(activity: Activity, key: Int) {
+		if (!activity.isChangingConfigurations) {
+			Warehouse.clear(key)
+		}
+	}
+
+	private fun attachInner(obj: Any, savedInstanceState: Bundle?): Int {
 		var key = -1
 		if (savedInstanceState != null) {
 			key = savedInstanceState.getInt(BUNDLE_KEY, -1)
@@ -30,22 +49,12 @@ object ConfigChangeWarehouse {
 			}
 		}
 		if (key == -1) {
-			key = fragment.hashCode()
+			key = obj.hashCode()
 		}
 		while (Warehouse.contains(key)) {
 			key++
 		}
 		return key
-	}
-
-	fun onSaveInstanceState(outState: Bundle, key: Int) {
-		outState.putInt(BUNDLE_KEY, key)
-	}
-
-	fun checkCleanUp(fragment: Fragment, key: Int) {
-		if (!fragment.requireActivity().isChangingConfigurations) {
-			Warehouse.clear(key)
-		}
 	}
 }
 
