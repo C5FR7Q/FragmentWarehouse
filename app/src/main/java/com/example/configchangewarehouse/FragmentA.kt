@@ -1,10 +1,10 @@
-package com.example.fragmentwarehouse
+package com.example.configchangewarehouse
 
 import android.os.Bundle
 import android.util.Log
 import kotlin.random.Random
 
-class FragmentB : BaseFragment() {
+class FragmentA : BaseFragment() {
 	companion object {
 		var A = 0
 		val CHAR_POOL: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')

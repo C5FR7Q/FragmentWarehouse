@@ -1,4 +1,4 @@
-package com.example.fragmentwarehouse
+package com.example.configchangewarehouse
 
 import android.os.Bundle
 import android.util.Log

@@ -1,4 +1,4 @@
-package com.example.fragmentwarehouse
+package com.example.configchangewarehouse
 
 import android.graphics.Color
 import android.os.Bundle
@@ -11,12 +11,12 @@ abstract class BaseFragment : Fragment(R.layout.fragment_layout) {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		key = FragmentWarehouse.attach(this, savedInstanceState)
+		key = ConfigChangeWarehouse.attach(this, savedInstanceState)
 	}
 
 	override fun onSaveInstanceState(outState: Bundle) {
 		super.onSaveInstanceState(outState)
-		FragmentWarehouse.onSaveInstanceState(outState, key)
+		ConfigChangeWarehouse.onSaveInstanceState(outState, key)
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,12 +32,12 @@ abstract class BaseFragment : Fragment(R.layout.fragment_layout) {
 
 	override fun onDestroy() {
 		super.onDestroy()
-		FragmentWarehouse.checkCleanUp(this, key)
+		ConfigChangeWarehouse.checkCleanUp(this, key)
 	}
 
 	protected inline fun <reified T> getOrStore(crossinline initializer: () -> T) =
-		FragmentWarehouse.getOrStore(key, initializer)
+		ConfigChangeWarehouse.getOrStore(key, initializer)
 
 	protected inline fun <reified T> getOrStoreTagged(tag: String, crossinline initializer: () -> T) =
-		FragmentWarehouse.getOrStoreTagged(tag, key, initializer)
+		ConfigChangeWarehouse.getOrStoreTagged(tag, key, initializer)
 }
